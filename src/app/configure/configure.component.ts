@@ -64,5 +64,6 @@ export class ConfigureComponent implements OnInit {
     });
 
     this.tempChanges.clear();
+
   }
 }
