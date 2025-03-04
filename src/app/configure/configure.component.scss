@@ -1,0 +1,139 @@
+:host ::ng-deep {
+  // Grid customization
+  .k-grid {
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 2rem !important; // Add consistent bottom margin
+
+    .k-grid-header,
+    .k-grid-content,
+    .k-grid-header-wrap,
+    .k-grid-header-locked,
+    .k-grid-table,
+    .k-grid-container,
+    .k-grid-content-locked {
+      border: none !important;
+      border-width: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .k-grid-content {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      overflow: hidden;
+
+      table {
+        border: none !important;
+        box-shadow: none !important;
+
+        tr, td, th {
+          border: none !important;
+          border-bottom: none !important;
+          box-shadow: none !important;
+          background: none !important;
+
+          &::before, &::after {
+            display: none !important;
+            content: none !important;
+          }
+        }
+      }
+    }
+
+    .required-field {
+      text-align: right;
+    }
+
+    .k-table-md .k-table-th, .k-table-md .k-table-td {
+      padding-inline-start: 10px !important;
+      padding-inline-end: 5px !important;
+    }
+
+    .k-grid-container {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0.5rem 1.5rem !important;
+    }
+
+    .k-grid-header-wrap {
+      border: none !important;
+    }
+
+    .k-grid-pager {
+      border: none !important;
+    }
+
+    .k-grid-content-locked,
+    .k-grid-content {
+      td.k-state-focused {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .k-cell-inner > .k-link, .k-grid-md .k-table-th > .k-cell-inner > .k-link {
+    color: white !important;
+    &:hover {
+      color: white !important;
+    }
+  }
+
+  th.k-header {
+    color: white !important;
+  }
+  .k-grid-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 !important;
+    .k-header {
+      border: none !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
+      background-color: #3d3d3d !important;
+
+      &:hover {
+        color: white !important;
+      }
+      &::before, &::after {
+        display: none !important;
+        content: none !important;
+      }
+
+      .k-column-title {
+        border: none !important;
+        &::after {
+          display: none !important;
+        }
+      }
+
+      .k-grid-header-table {
+        border: none !important;
+      }
+    }
+  }
+
+
+
+  button[kendoButton] {
+    background-color: #3d3d3d !important;
+    border-color: #3d3d3d !important;
+    color: white !important;
+
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      opacity: 0.97;
+    }
+  }
+
+  .k-checkbox {
+    &:checked, &.k-checked {
+      border-color: #3d3d3d !important;
+      background-color: #3d3d3d !important;
+    }
+  }
+}

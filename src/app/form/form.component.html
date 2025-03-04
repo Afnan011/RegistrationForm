@@ -1,0 +1,62 @@
+<div class="container mx-auto p-6 max-w-xl">
+  <h1 class="text-2xl md:text-6xl font-bold mb-6 text-center tracking-tight">Member Registration</h1>
+  <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg ">
+
+    <form [formGroup]="registrationForm" class="space-y-5" (ngSubmit)="onSubmit()">
+      <ng-container *ngFor="let field of sortedVisibleFields">
+        <div class="mb-5">
+          <kendo-formfield class="w-full">
+            <kendo-label
+              [for]="field.name"
+              [text]="field.label"
+              class="font-medium mb-1">
+            </kendo-label>
+            <ng-container [ngSwitch]="field.type">
+              <kendo-textbox
+                *ngSwitchCase="'text'"
+                [formControlName]="field.name"
+                [id]="field.name"
+                class="w-full"
+              ></kendo-textbox>
+              <kendo-textarea
+                *ngSwitchCase="'textarea'"
+                [formControlName]="field.name"
+                [id]="field.name"
+                [rows]="3"
+                class="w-full"
+              ></kendo-textarea>
+            </ng-container>
+            <kendo-formhint *ngIf="field.required" class="text-sm italic">Required</kendo-formhint>
+            <kendo-formerror *ngIf="shouldShowError(field.name)" class="text-sm">
+              {{ getErrorMessage(field.name) }}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </ng-container>
+
+      <div class="mt-8">
+        <button
+          kendoButton
+          type="submit"
+          [disabled]="registrationForm.invalid"
+          class="w-full py-2 font-medium tracking-wide transition duration-200"
+        >
+          Submit Registration
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <kendo-dialog
+    *ngIf="submitted"
+    (close)="closeDialog()"
+    [title]="'Registration Successful'"
+    [minWidth]="300"
+    [width]="500"
+    class="dialog-content">
+    <p class="text-base mb-3">Member registration has been submitted with the following details:</p>
+    <div class="mt-4">
+      <pre class="bg-gray-100 p-5 rounded-md font-mono text-sm overflow-auto">{{ submittedData | json }}</pre>
+    </div>
+  </kendo-dialog>
+</div>
