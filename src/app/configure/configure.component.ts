@@ -4,6 +4,7 @@ import { FormConfigService, FormFieldConfig } from '../form-config.service';
 import { FormsModule } from '@angular/forms';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { CheckBoxModule } from '@progress/kendo-angular-inputs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configure',
@@ -21,7 +22,7 @@ export class ConfigureComponent implements OnInit {
   formFieldsConfig: FormFieldConfig[] = [];
   tempChanges: Map<number, { show?: boolean, required?: boolean }> = new Map();
 
-  constructor(private formConfigService: FormConfigService) {}
+  constructor(private formConfigService: FormConfigService, private router: Router) {}
 
   ngOnInit(): void {
     this.formFieldsConfig = this.formConfigService.formFieldsConfig;
@@ -46,7 +47,6 @@ export class ConfigureComponent implements OnInit {
   }
 
   saveChanges(): void {
-    console.log('clicked');
     this.tempChanges.forEach((changes, index) => {
       const field = this.formFieldsConfig[index];
       console.log(field);
@@ -64,6 +64,9 @@ export class ConfigureComponent implements OnInit {
     });
 
     this.tempChanges.clear();
+
+    // change route to /register
+    this.router.navigate(['/register']);
 
   }
 }
