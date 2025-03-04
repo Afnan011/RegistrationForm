@@ -7,7 +7,7 @@
         <div class="mb-5">
           <kendo-formfield class="w-full">
             <kendo-label [for]="field.name" class="font-medium mb-1">
-              {{ field.label }} <span *ngIf="field.required" class="required-indicator">*</span>
+              {{ field.label }} <span *ngIf="field.required" class="required-indicator text-red-500">*</span>
             </kendo-label>
             
             <ng-container [ngSwitch]="field.type">

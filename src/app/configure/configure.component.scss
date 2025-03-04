@@ -84,6 +84,7 @@
   th.k-header {
     color: white !important;
   }
+
   .k-grid-header {
     display: flex;
     justify-content: space-between;
@@ -137,3 +138,16 @@
     }
   }
 }
+
+.k-button{
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.k-drag-clue, .k-reorder-clue {
+  background-color: #3d3d3d !important;
+  color: white !important;
+}
+
+

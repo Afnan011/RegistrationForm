@@ -63,13 +63,12 @@ export class FormConfigService {
     const currentConfig = [...this.formFieldsConfigSubject.getValue()];
     const [movedItem] = currentConfig.splice(oldIndex, 1);
     currentConfig.splice(newIndex, 0, movedItem);
-
-
+  
     const updatedConfig = currentConfig.map((field, index) => ({
       ...field,
       order: index + 1
     }));
-
+  
     this.formFieldsConfigSubject.next(updatedConfig);
   }
 
