@@ -1,15 +1,14 @@
 <div class="container mx-auto p-6 max-w-xl">
-  <h1 class="text-2xl md:text-6xl font-bold mb-6 text-center tracking-tight">Member Registration</h1>
+  <h1 class="text-2xl md:text-5xl font-bold mb-6 text-center tracking-tight">Member Registration</h1>
   <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg ">
 
     <form [formGroup]="registrationForm" class="space-y-5" (ngSubmit)="onSubmit()">
-      <ng-container *ngFor="let field of sortedVisibleFields">
+      <ng-container *ngFor="let field of fields">
         <div class="mb-5">
           <kendo-formfield class="w-full">
             <kendo-label [for]="field.name" class="font-medium mb-1">
               {{ field.label }} <span *ngIf="field.required" class="required-indicator text-red-500">*</span>
             </kendo-label>
-            
             <ng-container [ngSwitch]="field.type">
               <kendo-textbox
                 *ngSwitchCase="'text'"

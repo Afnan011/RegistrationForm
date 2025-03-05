@@ -9,7 +9,6 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { FormConfigService, FormFieldConfig } from '../form-config.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -30,73 +29,67 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./form.component.scss']
 })
 
-export class FormComponent implements OnInit, OnDestroy {
+export class FormComponent implements OnInit {
   registrationForm!: FormGroup;
   submitted = false;
   submittedData: any = null;
-  sortedVisibleFields: FormFieldConfig[] = [];
+  fields: FormFieldConfig[] = [];
 
-  private subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     private formConfigService: FormConfigService
-  ) {}
-
-  ngOnInit(): void {
-    this.createForm();
-
-    // this.subscription.add(
-    //   this.formConfigService.formFieldsConfig$.subscribe(() => {
-    //     this.updateFormValidators();
-    //     this.sortedVisibleFields = this.formConfigService.getSortedVisibleFields();
-    //   })
-    // );
-
-    this.sortedVisibleFields = this.formConfigService.getSortedVisibleFields();
+  ) {
+    this.registrationForm = this.fb.group({});
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 
-  createForm(): void {
-    const formControls: { [key: string]: any } = {};
-
-    this.formConfigService.formFieldsConfig.forEach(field => {
-      formControls[field.name] = ['', field.required ? Validators.required : []];
+  ngOnInit() {
+    const storedFields = this.formConfigService.getFields(); 
+    this.fields = storedFields.filter(f => f.show);
+    const savedData = localStorage.getItem('memberData');
+    const parsedData = savedData ? JSON.parse(savedData) : {};
+ 
+    this.updateForm(parsedData);
+   
+    this.formConfigService.fields$.subscribe(fields => {
+      console.log("Received Fields: ", fields);
+      this.fields = fields.filter(f => f.show);
+      this.updateForm();
     });
-
-    this.registrationForm = this.fb.group(formControls);
-    // this.updateFormValidators();
   }
 
-  // updateFormValidators(): void {
-  //   this.formConfigService.formFieldsConfig.forEach(field => {
-  //     const control = this.registrationForm.get(field.name);
-  //     console.log(control);
-  //     if (control) {
-  //       if (field.show && field.required) {
-  //         control.setValidators(Validators.required);
-  //       } else {
-  //         control.setValidators(null);
-  //       }
-  //       control.updateValueAndValidity();
-  //     }
-  //   });
-  // }
+  updateForm(savedData: any = {}) {
+    console.log("Updating Form with Fields: ", this.fields);
+ 
+    Object.keys(this.registrationForm.controls).forEach(control => {
+      this.registrationForm.removeControl(control);
+    });
+ 
+    this.fields.forEach(field => {
+      if (field.show) {
+        this.registrationForm.addControl(
+          field.name,
+          field.required ? this.fb.control(savedData[field.name] || '', Validators.required)
+          : this.fb.control(savedData[field.name] || '')
+        );
+      }
+    });
+ 
+    console.log("Updated Form Controls: ", Object.keys(this.registrationForm.controls));
+  }
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
       this.submitted = true;
       this.submittedData = {};
 
-      this.sortedVisibleFields.forEach(field => {
+      this.fields.forEach(field => {
         this.submittedData[field.name] = this.registrationForm.get(field.name)?.value;
       });
       console.log(this.submittedData);
     } else {
-      this.sortedVisibleFields.forEach(field => {
+      this.fields.forEach(field => {
         const control = this.registrationForm.get(field.name);
         if (control) {
           control.markAsTouched();
