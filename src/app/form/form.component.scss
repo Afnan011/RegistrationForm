@@ -54,4 +54,11 @@ button[kendoButton] {
 
 .k-textarea{
   min-height: 45px;
+  max-height: 200px;
+}
+
+.k-button {
+  border: 1px solid black !important;
+  border-radius: 10px;
+  padding: 10px; 
 }

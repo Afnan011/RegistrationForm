@@ -68,15 +68,27 @@ export class FormComponent implements OnInit {
  
     this.fields.forEach(field => {
       if (field.show) {
+        let validators = [];
+        
+        if (field.required) {
+          validators.push(Validators.required);
+          if (field.name === 'email') {
+            validators.push(Validators.email);
+            validators.push(Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/));
+          }
+  
+          if (field.name === 'mobile') {
+            validators.push(Validators.pattern(/^[0-9]{10}$/));
+          }
+        }
+
+        
         this.registrationForm.addControl(
           field.name,
-          field.required ? this.fb.control(savedData[field.name] || '', Validators.required)
-          : this.fb.control(savedData[field.name] || '')
+          this.fb.control(savedData[field.name] || '', validators)
         );
       }
     });
- 
-    console.log("Updated Form Controls: ", Object.keys(this.registrationForm.controls));
   }
 
   onSubmit(): void {
@@ -110,9 +122,26 @@ export class FormComponent implements OnInit {
 
   getErrorMessage(fieldName: string): string {
     const control = this.registrationForm.get(fieldName);
-    if (control?.errors?.['required']) {
-      return 'This field is required';
+    
+    if (control?.errors) {
+      if (control.errors['required']) {
+        return 'This field is required';
+      }
+      
+      if (control.errors['email']) {
+        return 'Please enter a valid email address';
+      }
+      
+      if (control.errors['pattern']) {
+        if (fieldName === 'mobile') {
+          return 'Please enter a valid 10-digit phone number';
+        }
+        if (fieldName === 'email') {
+          return 'Please enter a valid email address';
+        }
+      }
     }
+    
     return 'Invalid input';
   }
 }
