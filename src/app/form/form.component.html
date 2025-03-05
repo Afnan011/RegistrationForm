@@ -24,6 +24,7 @@
                 class="w-full"
               ></kendo-textarea>
             </ng-container>
+            
             <kendo-formerror *ngIf="shouldShowError(field.name)" class="text-sm">
               {{ getErrorMessage(field.name) }}
             </kendo-formerror>

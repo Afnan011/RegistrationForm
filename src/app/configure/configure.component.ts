@@ -57,7 +57,6 @@ export class ConfigureComponent implements OnInit {
     }
     this.tempChanges.get(index)!.show = field.show;
     
-    // If hiding a field, also uncheck required
     if (!field.show) {
       field.required = false;
       this.tempChanges.get(index)!.required = false;

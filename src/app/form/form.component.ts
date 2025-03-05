@@ -46,15 +46,13 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.createForm();
 
-    // Subscribe to changes in form configuration
-    this.subscription.add(
-      this.formConfigService.formFieldsConfig$.subscribe(() => {
-        this.updateFormValidators();
-        this.sortedVisibleFields = this.formConfigService.getSortedVisibleFields();
-      })
-    );
+    // this.subscription.add(
+    //   this.formConfigService.formFieldsConfig$.subscribe(() => {
+    //     this.updateFormValidators();
+    //     this.sortedVisibleFields = this.formConfigService.getSortedVisibleFields();
+    //   })
+    // );
 
-    // Initialize sortedVisibleFields
     this.sortedVisibleFields = this.formConfigService.getSortedVisibleFields();
   }
 
@@ -70,34 +68,34 @@ export class FormComponent implements OnInit, OnDestroy {
     });
 
     this.registrationForm = this.fb.group(formControls);
-    this.updateFormValidators();
+    // this.updateFormValidators();
   }
 
-  updateFormValidators(): void {
-    this.formConfigService.formFieldsConfig.forEach(field => {
-      const control = this.registrationForm.get(field.name);
-      if (control) {
-        if (field.show && field.required) {
-          control.setValidators(Validators.required);
-        } else {
-          control.setValidators(null);
-        }
-        control.updateValueAndValidity();
-      }
-    });
-  }
+  // updateFormValidators(): void {
+  //   this.formConfigService.formFieldsConfig.forEach(field => {
+  //     const control = this.registrationForm.get(field.name);
+  //     console.log(control);
+  //     if (control) {
+  //       if (field.show && field.required) {
+  //         control.setValidators(Validators.required);
+  //       } else {
+  //         control.setValidators(null);
+  //       }
+  //       control.updateValueAndValidity();
+  //     }
+  //   });
+  // }
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
       this.submitted = true;
       this.submittedData = {};
 
-      // Only include visible fields in the submitted data
       this.sortedVisibleFields.forEach(field => {
         this.submittedData[field.name] = this.registrationForm.get(field.name)?.value;
       });
+      console.log(this.submittedData);
     } else {
-      // Mark all visible fields as touched to show validation errors
       this.sortedVisibleFields.forEach(field => {
         const control = this.registrationForm.get(field.name);
         if (control) {

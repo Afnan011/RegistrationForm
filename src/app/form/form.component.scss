@@ -41,8 +41,17 @@ button[kendoButton] {
   border-color: #dc3545 !important; 
 }
 
-.k-button {
+.k-button .k-disabled {
+  border: 1px solid black !important;
+  background: red !important;
+}
+
+.k-button  {
   border: 1px solid black;
   border-radius: 10px;
   padding: 10px;
+}
+
+.k-textarea{
+  min-height: 45px;
 }
