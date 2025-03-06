@@ -2,38 +2,46 @@
   <h1>Member Registration</h1>
   <div class="form-wrapper">
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      <ng-container *ngFor="let field of fields">
-        <div class="form-field">
-          <kendo-formfield>
-            <kendo-label [for]="field.name">
-              {{ field.label }} <span *ngIf="field.required" class="required-indicator">*</span>
-            </kendo-label>
-            <ng-container [ngSwitch]="field.type">
-              <kendo-textbox
-                *ngSwitchCase="'text'"
-                [formControlName]="field.name"
-                [id]="field.name"
-              ></kendo-textbox>
-              <kendo-textarea
-                *ngSwitchCase="'textarea'"
-                [formControlName]="field.name"
-                [id]="field.name"
-                [rows]="3"
-              ></kendo-textarea>
-            </ng-container>
+      <ng-container *ngIf="fields.length > 0; else noFields">
+        <ng-container *ngFor="let field of fields">
+          <div class="form-field">
+            <kendo-formfield>
+              <kendo-label [for]="field.name">
+                {{ field.label }} <span *ngIf="field.required" class="required-indicator">*</span>
+              </kendo-label>
+              <ng-container [ngSwitch]="field.type">
+                <kendo-textbox
+                  *ngSwitchCase="'text'"
+                  [formControlName]="field.name"
+                  [id]="field.name"
+                ></kendo-textbox>
+                <kendo-textarea
+                  *ngSwitchCase="'textarea'"
+                  [formControlName]="field.name"
+                  [id]="field.name"
+                  [rows]="3"
+                ></kendo-textarea>
+              </ng-container>
 
-            <kendo-formerror *ngIf="shouldShowError(field.name)" class="error-message">
-              {{ getErrorMessage(field.name) }}
-            </kendo-formerror>
-          </kendo-formfield>
-        </div>
+              <kendo-formerror *ngIf="shouldShowError(field.name)" class="error-message">
+                {{ getErrorMessage(field.name) }}
+              </kendo-formerror>
+            </kendo-formfield>
+          </div>
+        </ng-container>
       </ng-container>
+
+      <ng-template #noFields>
+        <div class="no-fields-message">
+          <kendo-label>No fields selected</kendo-label>
+        </div>
+      </ng-template>
 
       <div class="submit-button">
         <button
           kendoButton
           type="submit"
-          [disabled]="registrationForm.invalid">
+          [disabled]="registrationForm.invalid || fields.length === 0">
           Submit
         </button>
       </div>

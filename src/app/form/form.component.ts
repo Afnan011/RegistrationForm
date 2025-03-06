@@ -47,13 +47,10 @@ export class FormComponent implements OnInit {
   ngOnInit() {
     const storedFields = this.formConfigService.getFields(); 
     this.fields = storedFields.filter(f => f.show);
-    const savedData = localStorage.getItem('memberData');
-    const parsedData = savedData ? JSON.parse(savedData) : {};
  
-    this.updateForm(parsedData);
+    this.updateForm({});
    
     this.formConfigService.fields$.subscribe(fields => {
-      console.log("Received Fields: ", fields);
       this.fields = fields.filter(f => f.show);
       this.updateForm();
     });

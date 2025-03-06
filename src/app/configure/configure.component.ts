@@ -6,6 +6,7 @@ import { GridModule, RowReorderEvent } from '@progress/kendo-angular-grid';
 import { CheckBoxModule } from '@progress/kendo-angular-inputs';
 import { Router } from '@angular/router';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configure',
@@ -18,13 +19,16 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
     ButtonsModule
   ],
   templateUrl: './configure.component.html',
-  styleUrls: ['./configure.component.scss'],
-  providers: []
+  styleUrls: ['./configure.component.scss']
 })
-export class ConfigureComponent  {
+export class ConfigureComponent {
   formFieldsConfig: FormFieldConfig[] = [];
 
-  constructor(private formConfigService: FormConfigService, private router: Router) {
+  constructor(
+    private formConfigService: FormConfigService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.formFieldsConfig = this.formConfigService.getFields();
     console.log('Initial formFieldsConfig:', this.formFieldsConfig);
   }
@@ -36,8 +40,15 @@ export class ConfigureComponent  {
       this.formFieldsConfig.splice(newIndex, 0, movedField);
     }
   }
- 
+
   saveConfig() {
+    const hasSelectedFields = this.formFieldsConfig.some(field => field.show);
+
+    if (!hasSelectedFields) {
+      this.toastr.error('Please select at least one field to show', 'Validation Error');
+      return;
+    }
+
     console.log('Saving Config: ', this.formFieldsConfig);
     this.formConfigService.setFields(this.formFieldsConfig);
     this.router.navigate(['/register']);
