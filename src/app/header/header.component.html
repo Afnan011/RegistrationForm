@@ -1,24 +1,24 @@
-<div>
+<div class="header-container">
     <kendo-buttongroup selection="single">
-        <button 
-            kendoButton 
-            [toggleable]="true" 
-            title="Register" 
-            [selected]="isRouteActive('register')" 
+        <button
+            kendoButton
+            [toggleable]="true"
+            title="Register"
+            [selected]="isRouteActive('register')"
             [routerLink]="'register'"
             >
             Register
         </button>
 
-        <button 
-            kendoButton 
-            [toggleable]="true" 
-            title="Configure" 
-            [selected]="isRouteActive('configure')" 
+        <button
+            kendoButton
+            [toggleable]="true"
+            title="Configure"
+            [selected]="isRouteActive('configure')"
             [routerLink]="'configure'"
         >
-        Configure
-    </button>
+            Configure
+        </button>
     </kendo-buttongroup>
 </div>
 

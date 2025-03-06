@@ -1,7 +1,7 @@
-<div class="container mx-auto p-4 max-w-2xl">
-  <h1 class="text-2xl md:text-6xl font-bold mb-6 text-center tracking-tight">Form Configuration</h1>
-  <div class="max-w-sm mx-auto bg-white rounded-lg shadow-lg text-base">
-    <div class="grid-container mb-6">
+<div class="configure-container">
+  <h1>Form Configuration</h1>
+  <div class="grid-wrapper">
+    <div class="grid-container">
       <kendo-grid
         [kendoGridBinding]="formFieldsConfig"
         [rowReorderable]="true"
@@ -9,21 +9,19 @@
         class="custom-grid"
       >
         <kendo-grid-rowreorder-column [width]="20"></kendo-grid-rowreorder-column>
-        
+
         <kendo-grid-column field="label" title="SHOW FIELD" [width]="130">
           <ng-template kendoGridCellTemplate let-dataItem let-index="index">
-            <div class="flex items-center gap-5">
+            <div class="checkbox-wrapper">
               <kendo-checkbox
                 [(ngModel)]="dataItem.show"
-
               ></kendo-checkbox>
-              
               <span>{{ dataItem.label }}</span>
             </div>
           </ng-template>
         </kendo-grid-column>
-    
-        <kendo-grid-column field="required" title="REQUIRED FIELD" 
+
+        <kendo-grid-column field="required" title="REQUIRED FIELD"
         class="required-field" [width]="80">
           <ng-template kendoGridCellTemplate let-dataItem let-index="index">
             <kendo-checkbox
@@ -33,9 +31,9 @@
           </ng-template>
         </kendo-grid-column>
       </kendo-grid>
-      
-      <div class="text-center p-4">
-        <button kendoButton class="text-white px-4 py-2 rounded-lg" (click)="saveConfig()">
+
+      <div class="button-container">
+        <button kendoButton (click)="saveConfig()">
           Save Changes
         </button>
       </div>

@@ -150,4 +150,51 @@
   color: white !important;
 }
 
+.configure-container {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 42rem;
+
+  h1 {
+    font-size: 1.5rem;
+    @media (min-width: 768px) {
+      font-size: 3.75rem;
+    }
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: -0.025em;
+  }
+}
+
+.grid-wrapper {
+  max-width: 24rem;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+.grid-container {
+  margin-bottom: 1.5rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.button-container {
+  text-align: center;
+  padding: 1rem;
+
+  button {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
 

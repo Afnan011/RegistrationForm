@@ -1,13 +1,13 @@
-button{
+.header-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.835);
+
+  button {
     font-size: 16px;
     margin: 4px 2px;
-}
-
-div{
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
-    background: #ffffffd5;
+  }
 }
 
 .k-button.k-selected, .k-button.k-active {
@@ -21,12 +21,12 @@ div{
 }
 
 .k-button-group {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .k-button-group > .k-button {
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 0 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 5px;
 }

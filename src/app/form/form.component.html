@@ -1,13 +1,12 @@
-<div class="container mx-auto p-6 max-w-xl">
-  <h1 class="text-2xl md:text-5xl font-bold mb-6 text-center tracking-tight">Member Registration</h1>
-  <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg ">
-
-    <form [formGroup]="registrationForm" class="space-y-5" (ngSubmit)="onSubmit()">
+<div class="form-container">
+  <h1>Member Registration</h1>
+  <div class="form-wrapper">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <ng-container *ngFor="let field of fields">
-        <div class="mb-5">
-          <kendo-formfield class="w-full">
-            <kendo-label [for]="field.name" class="font-medium mb-1">
-              {{ field.label }} <span *ngIf="field.required" class="required-indicator text-red-500">*</span>
+        <div class="form-field">
+          <kendo-formfield>
+            <kendo-label [for]="field.name">
+              {{ field.label }} <span *ngIf="field.required" class="required-indicator">*</span>
             </kendo-label>
             <ng-container [ngSwitch]="field.type">
               <kendo-textbox
@@ -20,23 +19,23 @@
                 [formControlName]="field.name"
                 [id]="field.name"
                 [rows]="3"
-                class="w-full"
               ></kendo-textarea>
             </ng-container>
-            
-            <kendo-formerror *ngIf="shouldShowError(field.name)" class="text-sm">
+
+            <kendo-formerror *ngIf="shouldShowError(field.name)" class="error-message">
               {{ getErrorMessage(field.name) }}
             </kendo-formerror>
           </kendo-formfield>
         </div>
       </ng-container>
 
-      <div class="mt-8">
+      <div class="submit-button">
         <button
           kendoButton
           type="submit"
-          [disabled]="registrationForm.invalid"
-          class="w-full py-2 font-medium tracking-wide transition duration-200"> Submit </button>
+          [disabled]="registrationForm.invalid">
+          Submit
+        </button>
       </div>
     </form>
   </div>
@@ -48,9 +47,9 @@
     [minWidth]="300"
     [width]="500"
     class="dialog-content">
-    <p class="text-base mb-3">Member registration has been submitted with the following details:</p>
-    <div class="mt-4">
-      <pre class="bg-gray-100 p-5 rounded-md font-mono text-sm overflow-auto">{{ submittedData | json }}</pre>
+    <p class="dialog-message">Member registration has been submitted with the following details:</p>
+    <div class="dialog-data">
+      <pre>{{ submittedData | json }}</pre>
     </div>
   </kendo-dialog>
 </div>
