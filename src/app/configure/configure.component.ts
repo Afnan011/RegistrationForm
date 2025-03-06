@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormConfigService, FormFieldConfig } from '../form-config.service';
 import { FormsModule } from '@angular/forms';
@@ -10,14 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configure',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    GridModule,
-    CheckBoxModule,
-    ButtonsModule
-  ],
   templateUrl: './configure.component.html',
   styleUrls: ['./configure.component.scss']
 })
