@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormConfigService, FormFieldConfig } from '../form-config.service';
+import { FormConfigService } from '../form-config.service';
 import { ToastrService } from 'ngx-toastr';
+import { FormFieldConfig } from '../form-field-config.model';
 
 @Component({
   selector: 'app-form',
@@ -55,7 +56,7 @@ export class FormComponent implements OnInit {
         if (field.required) {
           validators.push(Validators.required);
         }
-        
+
         const maxLength = this.getMaxLength(field.name);
         validators.push(Validators.maxLength(maxLength));
 
@@ -83,7 +84,7 @@ export class FormComponent implements OnInit {
   }
 
   getMaxLength(fieldName: string): number {
-    return this.maxLengths[fieldName] || 100; // Default maxLength is 100 if not specified
+    return this.maxLengths[fieldName] || 100; 
   }
 
   onSubmit(): void {
@@ -117,7 +118,6 @@ export class FormComponent implements OnInit {
 
   editForm(): void {
     this.submitted = false;
-    // Form data is preserved since we're not resetting the form
   }
 
   confirmSubmit(): void {
@@ -128,7 +128,6 @@ export class FormComponent implements OnInit {
 
   closeDialog(): void {
     this.submitted = false;
-    // Don't reset the form when just closing the dialog
   }
 
   shouldShowError(fieldName: string): boolean {

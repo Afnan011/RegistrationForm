@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormConfigService, FormFieldConfig } from '../form-config.service';
-import { FormsModule } from '@angular/forms';
-import { GridModule, RowReorderEvent } from '@progress/kendo-angular-grid';
-import { CheckBoxModule } from '@progress/kendo-angular-inputs';
+import { FormConfigService } from '../form-config.service';
 import { Router } from '@angular/router';
-import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ToastrService } from 'ngx-toastr';
+import { FormFieldConfig } from '../form-field-config.model';
 
 @Component({
   selector: 'app-configure',
