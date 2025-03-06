@@ -3,7 +3,6 @@
   .k-grid {
     border: none !important;
     box-shadow: none !important;
-    margin-bottom: 2rem !important; // Add consistent bottom margin
 
     .k-grid-header,
     .k-grid-content,
@@ -15,6 +14,7 @@
       border: none !important;
       border-width: 0 !important;
       box-shadow: none !important;
+      font-size: 16px !important;
     }
 
     .k-grid-content {
@@ -48,8 +48,8 @@
     }
 
     .k-table-md .k-table-th, .k-table-md .k-table-td {
-      padding-inline-start: 10px !important;
-      padding-inline-end: 5px !important;
+      padding-inline: 5px !important;
+      font-size: 16px !important;
     }
 
     .k-grid-container {
@@ -94,7 +94,7 @@
       border-bottom: none !important;
       box-shadow: none !important;
       background-color: #3d3d3d !important;
-
+      margin: 1rem 0 !important;
       &:hover {
         color: white !important;
       }
