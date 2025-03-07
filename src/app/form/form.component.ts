@@ -7,7 +7,7 @@ import { FormFieldConfig } from '../form-field-config.model';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
   registrationForm!: FormGroup;
@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
     name: 50,
     email: 100,
     mobile: 10,
-    address: 200
+    address: 200,
   };
 
   constructor(
@@ -32,24 +32,24 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     const storedFields = this.formConfigService.getFields();
-    this.fields = storedFields.filter(f => f.show);
+    this.fields = storedFields.filter((f) => f.show);
 
     this.updateForm({});
 
-    this.formConfigService.fields$.subscribe(fields => {
-      this.fields = fields.filter(f => f.show);
+    this.formConfigService.fields$.subscribe((fields) => {
+      this.fields = fields.filter((f) => f.show);
       this.updateForm();
     });
   }
 
   updateForm(savedData: any = {}) {
-    console.log("Updating Form with Fields: ", this.fields);
+    console.log('Updating Form with Fields: ', this.fields);
 
-    Object.keys(this.registrationForm.controls).forEach(control => {
+    Object.keys(this.registrationForm.controls).forEach((control) => {
       this.registrationForm.removeControl(control);
     });
 
-    this.fields.forEach(field => {
+    this.fields.forEach((field) => {
       if (field.show) {
         let validators = [];
 
@@ -60,14 +60,18 @@ export class FormComponent implements OnInit {
         const maxLength = this.getMaxLength(field.name);
         validators.push(Validators.maxLength(maxLength));
 
-        if(field.name === 'name') {
+        if (field.name === 'name') {
           validators.push(Validators.minLength(3));
           validators.push(Validators.pattern(/^[a-zA-Z][a-zA-Z ]*$/));
         }
 
         if (field.name === 'email') {
           validators.push(Validators.email);
-          validators.push(Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/));
+          validators.push(
+            Validators.pattern(
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            )
+          );
         }
 
         if (field.name === 'mobile') {
@@ -75,9 +79,10 @@ export class FormComponent implements OnInit {
         }
 
         if (field.name === 'address') {
-         validators.push(Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 ,.\-#]+$/));
+          validators.push(
+            Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 ,.\-#]+$/)
+          );
         }
-
 
         this.registrationForm.addControl(
           field.name,
@@ -88,30 +93,35 @@ export class FormComponent implements OnInit {
   }
 
   getMaxLength(fieldName: string): number {
-    return this.maxLengths[fieldName] || 100; 
+    return this.maxLengths[fieldName] || 100;
   }
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      const hasValues = Object.keys(this.registrationForm.controls).some(key =>
-        this.registrationForm.get(key)?.value !== '' &&
-        this.registrationForm.get(key)?.value !== null
+      const hasValues = Object.keys(this.registrationForm.controls).some(
+        (key) =>
+          this.registrationForm.get(key)?.value !== '' &&
+          this.registrationForm.get(key)?.value !== null
       );
 
       if (!hasValues) {
-        this.toastr.warning('Please fill in at least one field before submitting.', 'Empty Form');
+        this.toastr.warning(
+          'Please fill in at least one field before submitting.',
+          'Empty Form'
+        );
         return;
       }
 
       this.submitted = true;
       this.submittedData = {};
 
-      this.fields.forEach(field => {
-        this.submittedData[field.name] = this.registrationForm.get(field.name)?.value;
+      this.fields.forEach((field) => {
+        this.submittedData[field.name] =
+          this.registrationForm.get(field.name)?.value.trim() || '';
       });
       console.log(this.submittedData);
     } else {
-      this.fields.forEach(field => {
+      this.fields.forEach((field) => {
         const control = this.registrationForm.get(field.name);
         if (control) {
           control.markAsTouched();
@@ -147,7 +157,7 @@ export class FormComponent implements OnInit {
         return 'Please enter a valid email address';
       }
       if (control.errors['minlength']) {
-        return `Please enter a valid name, Minimum length is ${control.errors['minlength'].requiredLength} characters` ;
+        return `Please enter a valid name, Minimum length is ${control.errors['minlength'].requiredLength} characters`;
       }
       if (control.errors['maxlength']) {
         return `Maximum length is ${control.errors['maxlength'].requiredLength} characters`;
@@ -172,8 +182,3 @@ export class FormComponent implements OnInit {
     return 'Invalid input';
   }
 }
-
-
-
-
-
