@@ -14,12 +14,14 @@
                   *ngSwitchCase="'text'"
                   [formControlName]="field.name"
                   [id]="field.name"
+                  [maxlength]="getMaxLength(field.name)"
                 ></kendo-textbox>
                 <kendo-textarea
                   *ngSwitchCase="'textarea'"
                   [formControlName]="field.name"
                   [id]="field.name"
                   [rows]="3"
+                  [maxlength]="getMaxLength(field.name)"
                 ></kendo-textarea>
               </ng-container>
 
@@ -51,13 +53,17 @@
   <kendo-dialog
     *ngIf="submitted"
     (close)="closeDialog()"
-    [title]="'Registration Successful'"
+    [title]="'Confirm Submission'"
     [minWidth]="300"
     [width]="500"
     class="dialog-content">
-    <p class="dialog-message">Member registration has been submitted with the following details:</p>
+    <p class="dialog-message">Are you sure you want to submit the following details?</p>
     <div class="dialog-data">
       <pre>{{ submittedData | json }}</pre>
     </div>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="editForm()">Edit</button>
+      <button kendoButton themeColor="primary" (click)="confirmSubmit()">OK</button>
+    </kendo-dialog-actions>
   </kendo-dialog>
 </div>

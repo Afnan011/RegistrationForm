@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormConfigService, FormFieldConfig } from '../form-config.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form',
@@ -13,9 +14,17 @@ export class FormComponent implements OnInit {
   submittedData: any = null;
   fields: FormFieldConfig[] = [];
 
+  private maxLengths: { [key: string]: number } = {
+    name: 50,
+    email: 100,
+    mobile: 10,
+    address: 200
+  };
+
   constructor(
     private fb: FormBuilder,
-    private formConfigService: FormConfigService
+    private formConfigService: FormConfigService,
+    private toastr: ToastrService
   ) {
     this.registrationForm = this.fb.group({});
   }
@@ -45,20 +54,23 @@ export class FormComponent implements OnInit {
 
         if (field.required) {
           validators.push(Validators.required);
+        }
+        
+        const maxLength = this.getMaxLength(field.name);
+        validators.push(Validators.maxLength(maxLength));
 
-          if(field.name === 'name') {
-            validators.push(Validators.minLength(3));
-            validators.push(Validators.pattern(/^[a-zA-Z ]+$/));
-          }
+        if(field.name === 'name') {
+          validators.push(Validators.minLength(3));
+          validators.push(Validators.pattern(/^[a-zA-Z ]+$/));
+        }
 
-          if (field.name === 'email') {
-            validators.push(Validators.email);
-            validators.push(Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/));
-          }
+        if (field.name === 'email') {
+          validators.push(Validators.email);
+          validators.push(Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/));
+        }
 
-          if (field.name === 'mobile') {
-            validators.push(Validators.pattern(/^[0-9]{10}$/));
-          }
+        if (field.name === 'mobile') {
+          validators.push(Validators.pattern(/^[0-9]{10}$/));
         }
 
 
@@ -70,8 +82,22 @@ export class FormComponent implements OnInit {
     });
   }
 
+  getMaxLength(fieldName: string): number {
+    return this.maxLengths[fieldName] || 100; // Default maxLength is 100 if not specified
+  }
+
   onSubmit(): void {
     if (this.registrationForm.valid) {
+      const hasValues = Object.keys(this.registrationForm.controls).some(key =>
+        this.registrationForm.get(key)?.value !== '' &&
+        this.registrationForm.get(key)?.value !== null
+      );
+
+      if (!hasValues) {
+        this.toastr.warning('Please fill in at least one field before submitting.', 'Empty Form');
+        return;
+      }
+
       this.submitted = true;
       this.submittedData = {};
 
@@ -89,9 +115,20 @@ export class FormComponent implements OnInit {
     }
   }
 
-  closeDialog(): void {
+  editForm(): void {
+    this.submitted = false;
+    // Form data is preserved since we're not resetting the form
+  }
+
+  confirmSubmit(): void {
+    this.toastr.success('Form has been successfully submitted!', 'Success');
     this.submitted = false;
     this.registrationForm.reset();
+  }
+
+  closeDialog(): void {
+    this.submitted = false;
+    // Don't reset the form when just closing the dialog
   }
 
   shouldShowError(fieldName: string): boolean {
@@ -112,6 +149,9 @@ export class FormComponent implements OnInit {
       }
       if (control.errors['minlength']) {
         return `Please enter a valid name, Minimum length is ${control.errors['minlength'].requiredLength} characters` ;
+      }
+      if (control.errors['maxlength']) {
+        return `Maximum length is ${control.errors['maxlength'].requiredLength} characters`;
       }
 
       if (control.errors['pattern']) {
