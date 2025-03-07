@@ -34,3 +34,6 @@ body {
   padding: 1rem;
 }
 
+body.page-not-found-active {
+  overflow: hidden !important;
+}

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 
 @Component({
   selector: 'app-header',

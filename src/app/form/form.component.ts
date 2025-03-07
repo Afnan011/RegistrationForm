@@ -116,10 +116,6 @@ export class FormComponent implements OnInit {
     }
   }
 
-  editForm(): void {
-    this.submitted = false;
-  }
-
   confirmSubmit(): void {
     this.toastr.success('Form has been successfully submitted!', 'Success');
     this.submitted = false;

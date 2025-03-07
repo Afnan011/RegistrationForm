@@ -6,8 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  onClick() {
-    console.log('Button clicked!');
-  }
   title = 'RegistrationForm';
 }

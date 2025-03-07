@@ -36,7 +36,6 @@ import { ToastrModule } from 'ngx-toastr';
     LabelModule,
     DialogModule,
     GridModule,
-    LayoutModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
