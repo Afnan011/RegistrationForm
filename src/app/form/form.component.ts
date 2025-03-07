@@ -62,7 +62,7 @@ export class FormComponent implements OnInit {
 
         if(field.name === 'name') {
           validators.push(Validators.minLength(3));
-          validators.push(Validators.pattern(/^[a-zA-Z ]+$/));
+          validators.push(Validators.pattern(/^[a-zA-Z][a-zA-Z ]*$/));
         }
 
         if (field.name === 'email') {
@@ -72,6 +72,10 @@ export class FormComponent implements OnInit {
 
         if (field.name === 'mobile') {
           validators.push(Validators.pattern(/^[0-9]{10}$/));
+        }
+
+        if (field.name === 'address') {
+          validators.push(Validators.pattern(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9 ,.\-#]+$/));
         }
 
 
@@ -158,6 +162,9 @@ export class FormComponent implements OnInit {
         }
         if (fieldName === 'name') {
           return 'Please enter a valid name';
+        }
+        if (fieldName === 'address') {
+          return 'Please enter a valid address';
         }
       }
     }
