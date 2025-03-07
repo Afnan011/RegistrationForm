@@ -19,7 +19,6 @@ export class ConfigureComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Load the configuration data from service (which now uses localStorage)
     this.formFieldsConfig = this.formConfigService.getFields();
     console.log('Loaded formFieldsConfig from service:', this.formFieldsConfig);
   }

@@ -21,7 +21,6 @@ export class FormConfigService {
   fields$ = this.fieldsSubject.asObservable();
 
   constructor() {
-    // Initialize with localStorage data or defaults
     if (this.fields.length === 0) {
       this.fields = this.defaultFields;
       this.saveToLocalStorage();
