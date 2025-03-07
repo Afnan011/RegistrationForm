@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormConfigService } from '../form-config.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -9,16 +9,19 @@ import { FormFieldConfig } from '../form-field-config.model';
   templateUrl: './configure.component.html',
   styleUrls: ['./configure.component.scss']
 })
-export class ConfigureComponent {
+export class ConfigureComponent implements OnInit {
   formFieldsConfig: FormFieldConfig[] = [];
 
   constructor(
     private formConfigService: FormConfigService,
     private router: Router,
     private toastr: ToastrService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    // Load the configuration data from service (which now uses localStorage)
     this.formFieldsConfig = this.formConfigService.getFields();
-    console.log('Initial formFieldsConfig:', this.formFieldsConfig);
+    console.log('Loaded formFieldsConfig from service:', this.formFieldsConfig);
   }
 
   onDragEnd(event: any) {
@@ -39,6 +42,7 @@ export class ConfigureComponent {
 
     console.log('Saving Config: ', this.formFieldsConfig);
     this.formConfigService.setFields(this.formFieldsConfig);
+    this.toastr.success('Configuration saved successfully', 'Success');
     this.router.navigate(['/register']);
   }
 }
