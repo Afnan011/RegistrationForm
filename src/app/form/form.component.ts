@@ -181,4 +181,9 @@ export class FormComponent implements OnInit {
 
     return 'Invalid input';
   }
+
+  hasSubmittedData(): boolean {
+    if (!this.submittedData) return false;
+    return Object.values(this.submittedData).some(value => value !== '');
+  }
 }

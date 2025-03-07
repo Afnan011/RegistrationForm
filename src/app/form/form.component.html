@@ -59,7 +59,15 @@
     class="dialog-content">
     <p class="dialog-message">Are you sure you want to submit the following details?</p>
     <div class="dialog-data">
-      <pre>{{ submittedData | json }}</pre>
+      <div class="user-data-container">
+        <ng-container *ngFor="let field of fields">
+          <div class="data-row" *ngIf="submittedData[field.name]">
+            <div class="field-label">{{ field.label }}:</div>
+            <div class="field-value">{{ submittedData[field.name] }}</div>
+          </div>
+        </ng-container>
+        <div class="no-data" *ngIf="!hasSubmittedData()">No data provided</div>
+      </div>
     </div>
     <kendo-dialog-actions>
       <button kendoButton (click)="closeDialog()">Edit</button>
