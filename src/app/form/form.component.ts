@@ -75,7 +75,7 @@ export class FormComponent implements OnInit {
         }
 
         if (field.name === 'address') {
-          validators.push(Validators.pattern(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9 ,.\-#]+$/));
+         validators.push(Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 ,.\-#]+$/));
         }
 
 

@@ -1,6 +1,27 @@
-# RegistrationForm
+# Registration Form Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+A dynamic, configurable registration form application built with Angular 16.2.16. This application allows for flexible form configuration through services and models.
+
+## Project Overview
+
+The Registration Form application provides a configurable form solution with the following features:
+
+- Dynamic form field generation based on configuration
+- Form validation and submission
+- Configuration management through dedicated services
+- Responsive design with modern UI components
+
+## Project Structure
+
+- `app/form/` - Form components and related functionality
+- `app/configure/` - Configuration management components
+- `app/header/` - Application header components
+- `app/form-config.service.ts` - Service for managing form configurations
+- `app/form-field-config.model.ts` - Data model for form field configurations
+
+## Dependencies
+
+This project uses Telerik UI components, which require a valid license. The license file is included in the project root.
 
 ## Development server
 
